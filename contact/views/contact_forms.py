@@ -82,3 +82,30 @@ def update(request, contact_id):
         'contact/create.html',
         context,
     )
+
+def delete(request, contact_id):
+    contact = get_object_or_404(
+        Contact, 
+        pk=contact_id, 
+        show=True
+    )
+
+    confirmation = request.POST.get('confirmation', 'no')
+
+    if confirmation == 'yes':
+        print('Valor de confirmtion ', confirmation)
+        contact.delete()
+        return redirect('contact:index')
+    else:
+        print('Sem valor confirmation')
+    
+    context = {
+        'contact': contact,
+        'confirmation': confirmation
+    }
+    
+    return render(
+        request,
+        'contact/contact.html',
+        context
+    )
