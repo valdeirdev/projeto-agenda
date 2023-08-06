@@ -19,10 +19,18 @@
                 {% for contact in page_obj %}
                     <tr class="table-row">
                         <td class="table-cel">
-                            <a href="{% url 'contact:contact' contact.id %}" class="table-link">{{contact.id}}</a>
+                            {% if user == contact.owner %}
+                                <a href="{% url 'contact:contact' contact.id %}" class="table-link">{{contact.id}}</a>
+                            {% else %}
+                                {{contact.id}}
+                            {% endif %}
                         </td>
                         <td class="table-cel">
-                            <a href="{% url 'contact:contact' contact.id %}" class="table-link">{{contact.first_name}}</a>
+                            {% if user == contact.owner %}
+                                <a href="{% url 'contact:contact' contact.id %}" class="table-link">{{contact.first_name}}</a>
+                            {% else %}
+                                {{contact.first_name}}
+                            {% endif %}
                         </td>
                         <td class="table-cel">{{contact.last_name}}</td>
                         <td class="table-cel">{{contact.phone}}</td>

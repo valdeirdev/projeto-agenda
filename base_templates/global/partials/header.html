@@ -1,27 +1,54 @@
 <header class="header">
     <h1 class="header-heading">
         <a href="{% url 'contact:index' %}" class="header-link">
-            Agenda 
+            Agenda
         </a>
     </h1>
 
+    {% if user.is_authenticated %}
+        <p style="color: white; font-family: 'Roboto'">Usuário logado: {{ user.username }}</p>    
+    {% else %}
+        <p style="color: white; font-family: 'Roboto'">Nenhum usuário logado</p>
+    {% endif %}
+
     <nav class="menu">
         <ul class="menu-list">
-            <li class="menu-item">
-                <a href="{% url 'contact:index' %}" class="menu-link">
-                    Contacts
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{% url 'contact:create' %}" class="menu-link">
-                    New Contact
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="" class="menu-link">
-                    Link 2
-                </a>
-            </li>
+
+            {% if not user.is_authenticated %}
+                <li class="menu-item">
+                    <a href="{% url 'contact:register' %}" class="menu-link">
+                        Register
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url 'contact:login' %}" class="menu-link">
+                        Login
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+                <li class="menu-item">
+                    <a href="{% url 'contact:index' %}" class="menu-link">
+                        Contacts
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url 'contact:create' %}" class="menu-link">
+                        New Contact
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url 'contact:user_update' %}" class="menu-link">
+                        User Update
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url 'contact:logout' %}" class="menu-link">
+                        Logout
+                    </a>
+                </li>
+            {% endif %}
         </ul>
     </nav>
 
